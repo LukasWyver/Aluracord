@@ -1,37 +1,7 @@
+import React from "react";
+import { useRouter } from "next/router";
 import appConfig from "../config.json";
 import { Box, Button, Text, TextField, Image } from "@skynexui/components";
-
-// Component de estilos globais
-function GlobalStyle() {
-  return (
-    <style global jsx>{`
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        list-style: none;
-      }
-      body {
-        font-family: "Open Sans", sans-serif;
-      }
-      /* App fit Height */
-      html,
-      body,
-      #__next {
-        min-height: 100vh;
-        display: flex;
-        flex: 1;
-      }
-      #__next {
-        flex: 1;
-      }
-      #__next > * {
-        flex: 1;
-      }
-      /* ./App fit Height */
-    `}</style>
-  );
-}
 
 function Title(props) {
   const Tag = props.tag || "h1";
@@ -50,32 +20,23 @@ function Title(props) {
   );
 }
 
-// // Component React
-// function HomePage() {
-//   // JSX
-//   return (
-//     <div>
-//       <GlobalStyle />
-//       <Title tag="h2">Boas vindas de volta!</Title>
-//       <h1>Discord - Alura Matrix</h1>
-//     </div>
-//   );
-// }
-
-// export default HomePage;
-
 export default function PaginaInicial() {
-  const username = "lukaswyver";
+  const [username, setUsername] = React.useState("");
+  const [imgVisible, setImgVisible] = React.useState(false);
+  const roteamento = useRouter();
+
+  function handleUsername(value) {
+    value.length > 2 ? setImgVisible(true) : setImgVisible(false);
+  }
 
   return (
     <>
-      <GlobalStyle />
       <Box
         styleSheet={{
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: appConfig.theme.colors.primary[500],
+          backgroundColor: appConfig.theme.colors.primary["050"],
           backgroundImage:
             "url(https://images.hdqwalls.com/download/raze-valorant-4k-mf-3840x2160.jpg)",
           backgroundRepeat: "no-repeat",
@@ -104,6 +65,12 @@ export default function PaginaInicial() {
           {/* Formulário */}
           <Box
             as="form"
+            onSubmit={function (event) {
+              event.preventDefault();
+              // console.log("carregou...");
+              roteamento.push("/chat");
+              // window.location.href = "/chat";
+            }}
             styleSheet={{
               display: "flex",
               flexDirection: "column",
@@ -127,6 +94,14 @@ export default function PaginaInicial() {
 
             <TextField
               fullWidth
+              value={username}
+              onChange={function (event) {
+                // Onde esta o valor?
+                const value = event.target.value;
+                // Trocar o valor da variavél
+                setUsername(value);
+                handleUsername(value);
+              }}
               textFieldColors={{
                 neutral: {
                   textColor: appConfig.theme.colors.neutrals[200],
@@ -136,6 +111,7 @@ export default function PaginaInicial() {
                 },
               }}
             />
+
             <Button
               type="submit"
               label="Entrar"
@@ -166,24 +142,29 @@ export default function PaginaInicial() {
               minHeight: "240px",
             }}
           >
-            <Image
-              styleSheet={{
-                borderRadius: "50%",
-                marginBottom: "16px",
-              }}
-              src={`https://github.com/${username}.png`}
-            />
-            <Text
-              variant="body4"
-              styleSheet={{
-                color: appConfig.theme.colors.neutrals[200],
-                backgroundColor: appConfig.theme.colors.neutrals[900],
-                padding: "3px 10px",
-                borderRadius: "1000px",
-              }}
-            >
-              {username}
-            </Text>
+            {imgVisible && (
+              <>
+                <Image
+                  styleSheet={{
+                    borderRadius: "50%",
+                    marginBottom: "16px",
+                  }}
+                  src={`https://github.com/${username}.png`}
+                />
+
+                <Text
+                  variant="body4"
+                  styleSheet={{
+                    color: appConfig.theme.colors.neutrals[200],
+                    backgroundColor: appConfig.theme.colors.neutrals[900],
+                    padding: "3px 10px",
+                    borderRadius: "1000px",
+                  }}
+                >
+                  {username}
+                </Text>
+              </>
+            )}
           </Box>
           {/* Photo Area */}
         </Box>

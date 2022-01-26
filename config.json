@@ -1,5 +1,5 @@
 {
-    "name": "Aluracord - Valorant (lukaswyver)",
+    "name": "Discord - Valorant",
     "theme": {
       "colors": {
         "primary": {
@@ -13,6 +13,11 @@
           "700": "#4B366D",
           "800": "#382852",
           "900": "#261B37"
+        },
+        "error":{
+          "400": "#FF3052",
+          "500": "#E2082B",
+          "600": "#B2001D"
         },
         "neutrals": {
           "000": "#FFFFFF",
