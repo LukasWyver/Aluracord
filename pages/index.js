@@ -140,6 +140,7 @@ export default function PaginaInicial() {
               borderRadius: "10px",
               flex: 1,
               minHeight: "240px",
+              minWidth: "240px",
             }}
           >
             {imgVisible && (
