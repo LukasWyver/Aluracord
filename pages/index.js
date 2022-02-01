@@ -29,6 +29,13 @@ export default function PaginaInicial() {
     value.length > 2 ? setImgVisible(true) : setImgVisible(false);
   }
 
+  function handleSubmit() {
+    if (username != "" && username.length > 2) {
+      roteamento.push(`/chat?username=${username}`);
+    }
+    return;
+  }
+
   return (
     <>
       <Box
@@ -68,7 +75,7 @@ export default function PaginaInicial() {
             onSubmit={function (event) {
               event.preventDefault();
               // console.log("carregou...");
-              roteamento.push("/chat");
+              handleSubmit();
               // window.location.href = "/chat";
             }}
             styleSheet={{
